@@ -13,11 +13,146 @@ Send your API token in the `Authorization: Bearer YOUR_TOKEN` header.
 
 ## Request
 
+{/* api-examples:start */}
+Set `CTRLPANEL_API_TOKEN` in your environment before running an example. Path IDs are sample values; replace them with your own. Add optional query parameters from the table below when needed. JavaScript and TypeScript use the built-in fetch API in Bun or Node.js.
+
+<Tabs items={["cURL","JavaScript","TypeScript","Python","Go","Rust"]} groupId="api-language">
+<Tab value="curl">
+
 ```bash
-curl -X GET 'https://ctrlpanel.hosting.gg/api/products/{id}' \
-  -H 'Authorization: Bearer YOUR_TOKEN' \
+curl --fail-with-body -X GET 'https://ctrlpanel.hosting.gg/api/products/F6QnQ-91Afeo0chihMss' \
+  -H "Authorization: Bearer $CTRLPANEL_API_TOKEN" \
   -H 'Accept: application/json'
 ```
+
+</Tab>
+<Tab value="javascript">
+
+```js
+const token = process.env.CTRLPANEL_API_TOKEN;
+if (!token) throw new Error('Set CTRLPANEL_API_TOKEN first');
+
+const response = await fetch("https://ctrlpanel.hosting.gg/api/products/F6QnQ-91Afeo0chihMss", {
+  method: 'GET',
+  headers: {
+    Authorization: `Bearer ${token}`,
+    Accept: 'application/json',
+  },
+});
+const text = await response.text();
+if (!response.ok) throw new Error(`HTTP ${response.status}: ${text}`);
+console.log(text);
+```
+
+</Tab>
+<Tab value="typescript">
+
+```ts
+const token: string | undefined = process.env.CTRLPANEL_API_TOKEN;
+if (!token) throw new Error('Set CTRLPANEL_API_TOKEN first');
+
+const response = await fetch("https://ctrlpanel.hosting.gg/api/products/F6QnQ-91Afeo0chihMss", {
+  method: 'GET',
+  headers: {
+    Authorization: `Bearer ${token}`,
+    Accept: 'application/json',
+  },
+});
+const text = await response.text();
+if (!response.ok) throw new Error(`HTTP ${response.status}: ${text}`);
+console.log(text);
+```
+
+</Tab>
+<Tab value="python">
+
+```python
+# Install: pip install requests
+import os
+import requests
+
+token = os.environ['CTRLPANEL_API_TOKEN']
+response = requests.request(
+    'GET',
+    "https://ctrlpanel.hosting.gg/api/products/F6QnQ-91Afeo0chihMss",
+    headers={
+        'Authorization': f'Bearer {token}',
+        'Accept': 'application/json',
+    },
+    timeout=30,
+)
+response.raise_for_status()
+print(response.text)
+```
+
+</Tab>
+<Tab value="go">
+
+```go
+package main
+
+import (
+    "fmt"
+    "io"
+    "net/http"
+    "os"
+    "time"
+)
+
+func main() {
+    token := os.Getenv("CTRLPANEL_API_TOKEN")
+    if token == "" { panic("Set CTRLPANEL_API_TOKEN first") }
+    request, err := http.NewRequest("GET", "https://ctrlpanel.hosting.gg/api/products/F6QnQ-91Afeo0chihMss", nil)
+    if err != nil { panic(err) }
+    request.Header.Set("Authorization", "Bearer " + token)
+    request.Header.Set("Accept", "application/json")
+    client := &http.Client{Timeout: 30 * time.Second}
+    response, err := client.Do(request)
+    if err != nil { panic(err) }
+    defer response.Body.Close()
+    body, err := io.ReadAll(response.Body)
+    if err != nil { panic(err) }
+    if response.StatusCode < 200 || response.StatusCode >= 300 {
+        panic(fmt.Sprintf("HTTP %d: %s", response.StatusCode, body))
+    }
+    fmt.Println(string(body))
+}
+```
+
+</Tab>
+<Tab value="rust">
+
+```rust
+// Dependencies:
+// cargo add reqwest
+// cargo add tokio --features macros,rt-multi-thread
+use std::{env, time::Duration};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let token = env::var("CTRLPANEL_API_TOKEN")?;
+    let client = reqwest::Client::builder()
+        .timeout(Duration::from_secs(30))
+        .build()?;
+    let response = client
+        .request(reqwest::Method::GET, "https://ctrlpanel.hosting.gg/api/products/F6QnQ-91Afeo0chihMss")
+        .bearer_auth(token)
+        .header("Accept", "application/json")
+        .send()
+        .await?;
+    let status = response.status();
+    let text = response.text().await?;
+    if !status.is_success() {
+        return Err(format!("HTTP {}: {}", status, text).into());
+    }
+    println!("{}", text);
+    Ok(())
+}
+```
+
+</Tab>
+</Tabs>
+{/* api-examples:end */}
 
 ### Parameters
 

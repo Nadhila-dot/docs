@@ -46,6 +46,8 @@ Every branch push (except `gh-pages`) runs the static build and validation on Gi
 
 ## Source verification
 
+API request tabs (cURL, JavaScript, TypeScript, Python, Go, and Rust) are generated from `public/openapi/openapi.yaml` before each build. Run `bun run generate:api-examples` after editing that specification, then commit the refreshed API pages. The generator only replaces each endpoint's request examples; the surrounding documentation stays editable. JavaScript/TypeScript use built-in fetch, Python uses requests, Rust uses reqwest/Tokio, and Go uses its standard library. The language selection is shared across API tabs.
+
 New technical guides target CtrlPanel 1.2.0. Expanded technical pages include upstream source links for reference. Building this site does not modify an upstream checkout or production panel.
 
 The example PHP files are authored tutorial code. They are syntax-checked locally; this does not claim a live Laravel/database/payment integration test. The downloadable archives mirror the source in `examples/extensions/`.

@@ -14,6 +14,7 @@ jobs:
         with:
           bun-version: 1.4.2
       - run: bun install --frozen-lockfile
+      - run: bun test tests/api-examples.test.ts
       - run: bun run build
       - run: bun scripts/audit-headings.ts
       - run: bun scripts/verify-export.ts

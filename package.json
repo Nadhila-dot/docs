@@ -6,12 +6,13 @@
   "scripts": {
     "dev": "bun --bun next dev",
     "start": "bun run dev",
-    "build": "bun --bun next build --webpack && bun scripts/export-aliases.ts",
+    "build": "bun run generate:api-examples && bun --bun next build --webpack && bun scripts/export-aliases.ts",
     "serve": "bun scripts/serve.ts",
     "typecheck": "bunx --bun tsc --noEmit",
     "migrate": "bun scripts/migrate.ts",
     "postinstall": "fumadocs-mdx",
-    "gg:run": "MESSAGE=updated bun scripts/gg/repackage.ts"
+    "gg:run": "MESSAGE=updated bun scripts/gg/repackage.ts",
+    "generate:api-examples": "bun scripts/generate-api-examples.ts"
   },
   "dependencies": {
     "next": "16.4.0",
