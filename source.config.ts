@@ -10,6 +10,7 @@ const syntaxRules = [
 
 export default defineConfig({
   mdxOptions: {
+    remarkImageOptions: { external: false },
     rehypeCodeOptions: {
       themes: {
         light: {
