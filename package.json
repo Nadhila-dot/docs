@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "bun --bun next dev",
+    "dev": "bun --bun next dev --webpack",
     "start": "bun run dev",
     "build": "bun run generate:api-examples && bun --bun next build --webpack && bun scripts/export-aliases.ts",
     "serve": "bun scripts/serve.ts",
