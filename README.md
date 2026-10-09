@@ -42,6 +42,8 @@ Deploy the contents of `out/` to GitHub Pages or another static host. The GitHub
 
 Bun 1.4.2 is pinned in the project for consistent builds. The preview server is only a local file server; it is not required after deployment.
 
+Every branch push (except `gh-pages`) runs the static build and validation on GitHub Actions. CI also serves the output and checks representative pages, JavaScript assets, search, and 404 responses over HTTP. Download the `static-site` artifact from a successful workflow run to get the build without building locally. The workflow summary records the output size. These are HTTP smoke tests, not browser interaction tests.
+
 ## Source verification
 
 New technical guides target CtrlPanel 1.2.0. Expanded technical pages include upstream source links for reference. Building this site does not modify an upstream checkout or production panel.

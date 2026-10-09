@@ -1,11 +1,19 @@
 name: Validate static Fumadocs site
 on:
+  push:
+    branches-ignore: [gh-pages]
   pull_request:
     branches: [main, development]
   workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: static-check-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   test-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
       - uses: oven-sh/setup-bun@v2
@@ -16,3 +24,16 @@ jobs:
       - run: bun run build
       - run: bun scripts/audit-headings.ts
       - run: bun scripts/verify-export.ts
+      - name: Test the exported site over HTTP
+        run: bun test tests/static-site.test.ts
+      - name: Record export size
+        run: |
+          du -sh out | tee -a "$GITHUB_STEP_SUMMARY"
+          find out -type f | wc -l | tee -a "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: static-site
+          path: out/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
