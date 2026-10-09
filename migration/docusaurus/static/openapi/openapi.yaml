@@ -14,7 +14,7 @@ servers:
           - http
           - https
       domain:
-        default: panel.example.com
+        default: ctrlpanel.hosting.gg
         description: 'The domain where your panel is installed'
 tags:
   -
